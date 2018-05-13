@@ -7,12 +7,16 @@ function insertBooks(listElem, books){
         title.innerText = book.title;
         
         var clickButton = document.createElement('button');
-        clickButton.innerText = 'click';
+        clickButton.innerText = 'info';
         clickButton.classList.add('more');
+        clickButton.classList.add('btn');
+        clickButton.classList.add('btn-success');
         
         var deleteButton = document.createElement('button');
         deleteButton.innerText = 'delete';
         deleteButton.classList.add('delete');
+        deleteButton.classList.add('btn');
+        deleteButton.classList.add('btn-danger');
 
         let li = document.createElement('li');
         li.dataset.id=book.id;
@@ -69,7 +73,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	.done( books => insertBooks(ul, books) );
 	
 	$(ul).on('click', function(e){
-        if(e.target.classList == 'more') {	
+        if(e.target.classList == 'more btn btn-success') {	
             var parent = e.target.parentElement;
             var id = parent.getAttribute("data-id");
             $.ajax({
@@ -78,7 +82,7 @@ document.addEventListener("DOMContentLoaded",function(){
         		dataType: "json"
         	})
         	.done( book => showDiv(book, id) );
-        } else if(e.target.classList == 'delete') {	
+        } else if(e.target.classList == 'delete btn btn-danger') {	
             var parent = e.target.parentElement;
             var id = parent.getAttribute("data-id");
             $.ajax({
