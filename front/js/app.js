@@ -42,22 +42,69 @@ function showDiv( book, id){
 		}
 	}
 	
-	var author = document.createElement('h5');
+	/*var author = document.createElement('h5');
     author.innerText = book.author;
+    var authorLabel = document.createElement('h5');
+    authorLabel.innerText = "Author:";
     
     var isbn = document.createElement('h5');
     isbn.innerText = book.isbn;
+    var isbnLabel = document.createElement('h5');
+    isbnLabel.innerText = "ISBN:";
     
     var publisher = document.createElement('h5');
     publisher.innerText = book.publisher;
+    var publisherLabel = document.createElement('h5');
+    publisherLabel.innerText = "Publisher:";
 
     var type = document.createElement('h5');
     type.innerText = book.type;
+    var typeLabel = document.createElement('h5');
+    typeLabel.innerText = "Type:";
 
+    thisLi.appendChild(authorLabel);
     thisLi.appendChild(author);
+    thisLi.appendChild(isbnLabel);
     thisLi.appendChild(isbn);
+    thisLi.appendChild(publisherLabel);
     thisLi.appendChild(publisher);
-    thisLi.appendChild(type);
+    thisLi.appendChild(typeLabel);
+    thisLi.appendChild(type);*/
+	
+
+    var authorLabel = document.createElement('p');
+    authorLabel.innerText = "Author:";
+    
+    var isbnLabel = document.createElement('p');
+    isbnLabel.innerText = "ISBN:";
+    
+    var publisherLabel = document.createElement('p');
+    publisherLabel.innerText = "Publisher:";
+
+    var typeLabel = document.createElement('p');
+    typeLabel.innerText = "Type:";
+
+    thisLi.appendChild(authorLabel);
+    thisLi.appendChild(isbnLabel);
+    thisLi.appendChild(publisherLabel);
+    thisLi.appendChild(typeLabel);
+    
+    var author = document.createElement('p');
+    author.innerText = book.author;
+    
+    var isbn = document.createElement('p');
+    isbn.innerText = book.isbn;
+    
+    var publisher = document.createElement('p');
+    publisher.innerText = book.publisher;
+    
+    var type = document.createElement('p');
+    type.innerText = book.type;
+    
+    authorLabel.appendChild(author);
+    isbnLabel.appendChild(author);
+    publisherLabel.appendChild(author);
+    typeLabel.appendChild(author);
 }
 
 
