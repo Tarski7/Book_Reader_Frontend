@@ -16,6 +16,12 @@ function insertBooks(listElem, books){
         deleteButton.classList.add('delete');
         deleteButton.classList.add('btn');
         deleteButton.classList.add('btn-danger');
+        
+        var editButton = document.createElement('button');
+        editButton.innerText = 'edit';
+        editButton.classList.add('edit');
+        editButton.classList.add('btn');
+        editButton.classList.add('btn-warning');  
 
         let li = document.createElement('li');
         li.dataset.id=book.id;
@@ -23,6 +29,7 @@ function insertBooks(listElem, books){
         li.appendChild(title);
         li.appendChild(clickButton); 
         li.appendChild(deleteButton);
+        li.appendChild(editButton);
         
         listElem.appendChild(li);
     });
@@ -106,6 +113,24 @@ function showDiv( book, id){
     typeLabel.appendChild(author);*/
 }
 
+function editDiv( book, id){
+
+	var thisLi;
+	var li = document.querySelectorAll('li');
+	for (var i = 0; i < li.length; i++) {
+		if (li[i].getAttribute("data-id") == id) {
+			thisLi = li[i];
+			thisLi.addEventListener('click', function(e) {
+		    	e.stopPropagation();
+		    })
+		}
+	}
+	
+    var title2 = document.querySelector('h5');
+    title2.innerText = book.title;
+	
+}
+
 
 document.addEventListener("DOMContentLoaded",function(){
 	
@@ -113,7 +138,7 @@ document.addEventListener("DOMContentLoaded",function(){
 	//var tt = document.querySelector('div.tt');
 	
 	$.ajax({
-		url: "http://localhost:8080/books/",
+		url: "http://localhost:8080/books2/",
 		type: "GET",
 		dataType: "json"
 	})
@@ -126,7 +151,7 @@ document.addEventListener("DOMContentLoaded",function(){
             var parent = e.target.parentElement;
             var id = parent.getAttribute("data-id");
             $.ajax({
-        		url: "http://localhost:8080/books/" + id,
+        		url: "http://localhost:8080/books2/" + id,
         		type: "GET",
         		dataType: "json"
         	})
@@ -135,14 +160,48 @@ document.addEventListener("DOMContentLoaded",function(){
             var parent = e.target.parentElement;
             var id = parent.getAttribute("data-id");
             $.ajax({
-        		url: "http://localhost:8080/books/" + id,
+        		url: "http://localhost:8080/books2/" + id,
         		type: "DELETE",
         	})
         	.done( function() { alert('DELETE completed'); location.reload(); } )
         	.fail (function() { alert('DELETE failed'); } );
-        }
-  
-    })
+        } else if (e.target.classList == 'edit btn btn-warning') {
+        	var parent = e.target.parentElement;
+            var id = parent.getAttribute("data-id");
+              
+            var h3 = parent.querySelector('h3');
+            h3.setAttribute('contenteditable', true);
+            
+            var saveButton = document.createElement('button');
+            saveButton.innerText = 'save';
+            saveButton.classList.add('save');
+            saveButton.classList.add('btn');
+            saveButton.classList.add('btn-info');
+            
+            parent.appendChild(saveButton);       
+            
+        	$(ul).on('click', function(eee){
+            if (eee.target.classList == 'save btn btn-info') {
+            	
+            	var title = parent.querySelector('h3').innerText;
+            	console.log(title);
+            	
+	            $.ajax({
+	        		url: "http://localhost:8080/books2/" + id,
+	        		data: JSON.stringify({
+	                    "title" : title}),
+	        		contentType: "application/json",
+	        		type: "PUT",
+	        		dataType: "json"
+	        	})
+	        	.done (function() { alert('PUT completed'); location.reload(); } );
+            }
+        	});
+            
+        } 
+       
+        
+    });
     
     
     var submit = document.querySelector('.btn');
@@ -156,7 +215,7 @@ document.addEventListener("DOMContentLoaded",function(){
 			var isbn = document.getElementById("isbn").value;
 		}
 		$.ajax({
-    		url: "http://localhost:8080/books/",
+    		url: "http://localhost:8080/books2/",
     		data: JSON.stringify({
                 "title" : title,
                 "author" : author,
